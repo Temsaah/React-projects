@@ -5,6 +5,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
   const [isValid, setIsValid] = useState(false);
 
   function isFormValid() {
+    return true;
     if (formData.name && validateEmail(formData.email) && formData.phone)
       return true;
     return false;
@@ -40,7 +41,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 placeholder="e.g. Stephen King"
                 id="name"
                 name="name"
-                value={formData?.name}
+                value={formData.name}
                 onChange={(e) =>
                   setFormData((data) => ({ ...data, name: e.target.value }))
                 }
@@ -60,6 +61,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 id="email"
                 name="email"
                 placeholder="e.g. stephenking@lorem.com"
+                value={formData.email}
                 onChange={(e) =>
                   setFormData((data) => ({ ...data, email: e.target.value }))
                 }
@@ -78,6 +80,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 type="tel"
                 id="phone"
                 name="phone"
+                value={formData.phone}
                 placeholder="e.g. +1 234 567 890"
                 onChange={(e) =>
                   setFormData((data) => ({ ...data, phone: e.target.value }))

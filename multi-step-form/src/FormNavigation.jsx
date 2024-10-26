@@ -11,7 +11,7 @@ function FormNavigation({ currStep, isFormValid, setCurrStep }) {
       )}
       <button
         className="ml-auto rounded-md bg-primary-marine-blue px-5 py-2 text-sm font-medium text-white"
-        onClick={() => isFormValid() && setCurrStep((step) => ++step)}
+        onClick={() => isFormValid() !== false && setCurrStep((step) => ++step)}
       >
         Next Step
       </button>

@@ -6,6 +6,7 @@ function PlanSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
   const [isValid, setIsValid] = useState(false);
 
   function isFormValid() {
+    return true
     if (formData.plan) return true;
     return false;
   }

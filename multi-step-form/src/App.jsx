@@ -3,6 +3,8 @@ import "./App.css";
 import Form from "./form/PersonalInfoForm";
 import PersonalInfoForm from "./form/PersonalInfoForm";
 import PlanSelectionForm from "./form/PlanSelectionForm";
+import AddonsSelectionForm from "./form/AddonsSelectionForm";
+import FinishingUpForm from "./form/FinishingUpForm";
 
 function App() {
   const [currStep, setCurrStep] = useState(1);
@@ -12,6 +14,11 @@ function App() {
     phone: "",
     plan: "",
     billing: "monthly",
+    addons: {
+      online: false,
+      extraStorage: false,
+      customProfile: false,
+    },
   });
 
   return (
@@ -95,6 +102,24 @@ function FormContainer({
 
       {currStep === 2 && (
         <PlanSelectionForm
+          currStep={currStep}
+          setCurrStep={setCurrStep}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      )}
+
+      {currStep === 3 && (
+        <AddonsSelectionForm
+          currStep={currStep}
+          setCurrStep={setCurrStep}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      )}
+
+      {currStep === 4 && (
+        <FinishingUpForm
           currStep={currStep}
           setCurrStep={setCurrStep}
           formData={formData}
