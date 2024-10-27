@@ -5,6 +5,7 @@ import PersonalInfoForm from "./form/PersonalInfoForm";
 import PlanSelectionForm from "./form/PlanSelectionForm";
 import AddonsSelectionForm from "./form/AddonsSelectionForm";
 import FinishingUpForm from "./form/FinishingUpForm";
+import ThankMessage from "./form/ThankMessage";
 
 function App() {
   const [currStep, setCurrStep] = useState(1);
@@ -13,13 +14,35 @@ function App() {
     email: "",
     phone: "",
     plan: "",
-    billing: "monthly",
-    addons: {
-      online: false,
-      extraStorage: false,
-      customProfile: false,
-    },
+    billing: "Monthly",
+    addons: [
+      {
+        id: "online",
+        name: "Online service",
+        description: "Access to multiplayer games",
+        monthlyPrice: 1,
+        selected: false,
+      },
+      {
+        id: "extraStorage",
+        name: "Extra storage",
+        description: "Extra 1TB of cloud save",
+        monthlyPrice: 2,
+        selected: false,
+      },
+      {
+        id: "customProfile",
+        name: "Customizable profile",
+        description: "Custom theme on your profile",
+        monthlyPrice: 2,
+        selected: false,
+      },
+    ],
+
+    submitted: false,
   });
+
+  console.log(formData);
 
   return (
     <div className="grid h-screen w-screen grid-rows-[23vh,1fr]">
@@ -118,7 +141,7 @@ function FormContainer({
         />
       )}
 
-      {currStep === 4 && (
+      {currStep === 4 && !formData.submitted && (
         <FinishingUpForm
           currStep={currStep}
           setCurrStep={setCurrStep}
@@ -126,6 +149,8 @@ function FormContainer({
           setFormData={setFormData}
         />
       )}
+
+      {formData.submitted && <ThankMessage />}
     </div>
   );
 }

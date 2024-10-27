@@ -6,8 +6,10 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
 
   function isFormValid() {
     return true;
-    if (formData.name && validateEmail(formData.email) && formData.phone)
+    if (formData.name && validateEmail(formData.email) && formData.phone) {
+      console.log("FORM VALIDATED");
       return true;
+    }
     return false;
   }
 

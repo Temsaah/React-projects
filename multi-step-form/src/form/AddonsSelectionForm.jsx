@@ -1,7 +1,15 @@
 import FormNavigation from "@/FormNavigation";
 
-
 function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
+  function handleAddonChange(id) {
+    setFormData((prevData) => ({
+      ...prevData,
+      addons: prevData.addons.map((addon) =>
+        addon.id === id ? { ...addon, selected: !addon.selected } : addon,
+      ),
+    }));
+  }
+
   function isFormValid() {}
   return (
     <>
@@ -16,93 +24,32 @@ function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
         </fieldset>
 
         <div className="mt-10 grid gap-4">
-          <label
-            className={`flex items-center gap-1 rounded-xl border ${formData.addons.online ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3`}
-          >
-            <input
-              className="peer h-5 w-5 accent-primary-purplish-blue"
-              type="checkbox"
-              checked={formData.addons.online}
-              onChange={() =>
-                setFormData((data) => ({
-                  ...data,
-                  addons: {
-                    ...data.addons,
-                    online: !data.addons.online,
-                  },
-                }))
-              }
-            />
-            <p className="ml-3 grid justify-items-start gap-0.5">
-              <span className="text-sm font-medium text-primary-marine-blue">
-                Online service
-              </span>
-              <span className="text-start text-xs text-neutral-cool-gray">
-                Access to multiplayer games
-              </span>
-            </p>
-            <p className="ml-auto text-xs text-primary-purplish-blue">
-              {formData.billing === "monthly" ? "+$1/mo" : "+$10/yr"}
-            </p>
-          </label>
-          <label
-            className={`flex items-center gap-1 rounded-xl border ${formData.addons.extraStorage ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3`}
-          >
-            <input
-              className="peer h-5 w-5 accent-primary-purplish-blue"
-              type="checkbox"
-              checked={formData.addons.extraStorage}
-              onChange={() =>
-                setFormData((data) => ({
-                  ...data,
-                  addons: {
-                    ...data.addons,
-                    extraStorage: !data.addons.extraStorage,
-                  },
-                }))
-              }
-            />
-            <p className="ml-3 grid justify-items-start gap-0.5">
-              <span className="text-sm font-medium text-primary-marine-blue">
-                Larger storage
-              </span>
-              <span className="text-start text-xs text-neutral-cool-gray">
-                Extra 1TB of cloud save
-              </span>
-            </p>
-            <p className="ml-auto text-xs text-primary-purplish-blue">
-              {formData.billing === "monthly" ? "+$2/mo" : "+$20/yr"}
-            </p>
-          </label>
-          <label
-            className={`flex items-center gap-1 rounded-xl border ${formData.addons.customProfile ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3`}
-          >
-            <input
-              className="peer h-5 w-5 accent-primary-purplish-blue"
-              type="checkbox"
-              checked={formData.addons.customProfile}
-              onChange={() =>
-                setFormData((data) => ({
-                  ...data,
-                  addons: {
-                    ...data.addons,
-                    customProfile: !data.addons.customProfile,
-                  },
-                }))
-              }
-            />
-            <p className="ml-3 grid justify-items-start gap-0.5">
-              <span className="text-sm font-medium text-primary-marine-blue">
-                Customizable profile
-              </span>
-              <span className="text-start text-xs text-neutral-cool-gray">
-                Custom theme on your profile
-              </span>
-            </p>
-            <p className="ml-auto text-xs text-primary-purplish-blue">
-              {formData.billing === "monthly" ? "+$2/mo" : "+$20/yr"}
-            </p>
-          </label>
+          {formData.addons.map((addon) => (
+            <label
+              key={addon.id}
+              className={`flex items-center gap-1 rounded-xl border ${addon.selected ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3`}
+            >
+              <input
+                className="peer h-5 w-5 accent-primary-purplish-blue"
+                type="checkbox"
+                checked={addon.selected}
+                onChange={() => handleAddonChange(addon.id)}
+              />
+              <p className="ml-3 grid justify-items-start gap-0.5">
+                <span className="text-sm font-medium text-primary-marine-blue">
+                  {addon.name}
+                </span>
+                <span className="text-start text-xs text-neutral-cool-gray">
+                  {addon.description}
+                </span>
+              </p>
+              <p className="ml-auto text-xs text-primary-purplish-blue">
+                {formData.billing === "Monthly"
+                  ? `+$${addon.monthlyPrice}/mo`
+                  : `+$${addon.monthlyPrice * 10}/yr`}
+              </p>
+            </label>
+          ))}
         </div>
       </form>
 
