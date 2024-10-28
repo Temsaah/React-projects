@@ -5,9 +5,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
   const [isValid, setIsValid] = useState(false);
 
   function isFormValid() {
-    return true;
     if (formData.name && validateEmail(formData.email) && formData.phone) {
-      console.log("FORM VALIDATED");
       return true;
     }
     return false;
@@ -20,16 +18,16 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
 
   return (
     <>
-      <form className="relative -top-14 rounded-xl bg-white p-8 shadow-xl">
+      <form className="relative -top-14 rounded-xl bg-white p-8 lg:p-0 shadow-xl lg:top-0 lg:shadow-none ">
         <fieldset className="space-y-3">
-          <legend className="text-2xl font-bold text-primary-marine-blue">
+          <legend className="text-2xl lg:text-3xl font-bold text-primary-marine-blue">
             Personal info
           </legend>
-          <p className="text-neutral-cool-gray">
+          <p className="text-neutral-cool-gray lg:!mb-8">
             Please provide your name, email address, and phone number.
           </p>
 
-          <div className="grid gap-4">
+          <div className="grid gap-4 lg:gap-6">
             <div className="grid gap-1">
               <label
                 className="text-xs text-primary-marine-blue"

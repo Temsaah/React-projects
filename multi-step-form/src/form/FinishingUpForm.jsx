@@ -14,7 +14,7 @@ function FinishingUpForm({ formData, setFormData, currStep, setCurrStep }) {
   function isFormValid() {}
   return (
     <>
-      <form className="relative -top-14 rounded-xl bg-white px-6 py-8 shadow-xl">
+      <form className="relative -top-14 rounded-xl bg-white p-8 shadow-xl lg:top-0 lg:p-0 lg:shadow-none">
         <fieldset className="space-y-3">
           <legend className="text-2xl font-bold text-primary-marine-blue">
             Finishing up

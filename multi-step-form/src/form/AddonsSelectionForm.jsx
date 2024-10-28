@@ -13,9 +13,9 @@ function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
   function isFormValid() {}
   return (
     <>
-      <form className="relative -top-14 rounded-xl bg-white px-6 py-8 shadow-xl">
+      <form className="relative lg:min-w-[400px] -top-14 rounded-xl p-8 lg:p-0 bg-white  shadow-xl lg:top-0 lg:shadow-none">
         <fieldset className="space-y-3">
-          <legend className="text-2xl font-bold text-primary-marine-blue">
+          <legend className="text-2xl font-bold text-primary-marine-blue lg:text-3xl">
             Pick add-ons
           </legend>
           <p className="text-neutral-cool-gray">
@@ -36,10 +36,10 @@ function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
                 onChange={() => handleAddonChange(addon.id)}
               />
               <p className="ml-3 grid justify-items-start gap-0.5">
-                <span className="text-sm font-medium text-primary-marine-blue">
+                <span className="text-sm font-medium text-primary-marine-blue lg:text-[0.95rem]">
                   {addon.name}
                 </span>
-                <span className="text-start text-xs text-neutral-cool-gray">
+                <span className="text-start text-xs text-neutral-cool-gray lg:text-sm">
                   {addon.description}
                 </span>
               </p>

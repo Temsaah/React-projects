@@ -12,19 +12,19 @@ function PlanSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
 
   return (
     <>
-      <form className="relative -top-[4rem] rounded-xl bg-white p-7 shadow-xl">
+      <form className="relative -top-14 rounded-xl p-8 lg:p-0 bg-white  shadow-xl lg:top-0  lg:shadow-none">
         <fieldset className="space-y-3">
-          <legend className="text-2xl font-bold text-primary-marine-blue">
+          <legend className="text-2xl font-bold text-primary-marine-blue lg:text-3xl">
             Select your plan
           </legend>
-          <p className="text-neutral-cool-gray">
+          <p className="text-neutral-cool-gray lg:!mb-10">
             You have the option of monthly or yearly billing.
           </p>
 
-          <div className="!mt-5 grid gap-3">
+          <div className="!mt-5 grid gap-3 lg:grid lg:grid-cols-3">
             <button
               type="button"
-              className={`flex gap-3 rounded-xl border ${formData.plan === "Arcade" ? "border-primary-marine-blue" : "border-neutral-light-gray"} p-4 px-5`}
+              className={`flex gap-3 rounded-xl border ${formData.plan === "Arcade" ? "border-primary-marine-blue" : "border-neutral-light-gray"} p-4 px-5 lg:flex-col lg:gap-12 lg:pr-12`}
               onClick={() =>
                 setFormData((data) => ({ ...data, plan: "Arcade" }))
               }
@@ -44,7 +44,7 @@ function PlanSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
             </button>
             <button
               type="button"
-              className={`flex gap-3 rounded-xl border ${formData.plan === "Advanced" ? "border-primary-marine-blue" : "border-neutral-light-gray"} p-4 px-5`}
+              className={`flex gap-3 rounded-xl border ${formData.plan === "Advanced" ? "border-primary-marine-blue" : "border-neutral-light-gray"} p-4 px-5 lg:flex-col lg:gap-12 lg:pr-12`}
               onClick={() =>
                 setFormData((data) => ({ ...data, plan: "Advanced" }))
               }
@@ -64,7 +64,7 @@ function PlanSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
             </button>
             <button
               type="button"
-              className={`flex gap-3 rounded-xl border ${formData.plan === "Pro" ? "border-primary-marine-blue" : "border-neutral-light-gray"} p-4 px-5`}
+              className={`flex gap-3 rounded-xl border ${formData.plan === "Pro" ? "border-primary-marine-blue" : "border-neutral-light-gray"} p-4 px-5 lg: lg:flex-col lg:gap-12 lg:pr-12`}
               onClick={() => setFormData((data) => ({ ...data, plan: "Pro" }))}
             >
               <img src="/images/icon-pro.svg" alt="" />
@@ -81,7 +81,7 @@ function PlanSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
               </span>
             </button>
           </div>
-          <div className="flex items-center justify-center gap-5 p-5">
+          <div className="flex items-center justify-center gap-5 p-5 lg:!mt-7">
             <p
               className={`text-sm ${formData.billing === "Monthly" ? "text-primary-marine-blue" : "text-neutral-cool-gray"} font-semibold`}
             >
