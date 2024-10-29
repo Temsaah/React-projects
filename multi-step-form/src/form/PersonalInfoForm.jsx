@@ -4,7 +4,31 @@ import FormNavigation from "../FormNavigation";
 function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
   const [isValid, setIsValid] = useState(false);
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
   function isFormValid() {
+    setErrors({
+      name: "",
+      email: "",
+      phone: "",
+    });
+
+    if (!formData.name) {
+      setErrors((prev) => ({ ...prev, name: "This field is required" }));
+    }
+
+    if (!validateEmail(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: "This field is required" }));
+    }
+
+    if (!formData.phone) {
+      setErrors((prev) => ({ ...prev, phone: "This field is required" }));
+    }
+
     if (formData.name && validateEmail(formData.email) && formData.phone) {
       return true;
     }
@@ -18,9 +42,9 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
 
   return (
     <>
-      <form className="relative -top-14 rounded-xl bg-white p-8 lg:p-0 shadow-xl lg:top-0 lg:shadow-none ">
+      <form className="relative -top-14 rounded-xl bg-white p-8 shadow-xl lg:top-0 lg:p-0 lg:shadow-none">
         <fieldset className="space-y-3">
-          <legend className="text-2xl lg:text-3xl font-bold text-primary-marine-blue">
+          <legend className="text-2xl font-bold text-primary-marine-blue lg:text-3xl">
             Personal info
           </legend>
           <p className="text-neutral-cool-gray lg:!mb-8">
@@ -28,7 +52,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
           </p>
 
           <div className="grid gap-4 lg:gap-6">
-            <div className="grid gap-1">
+            <div className="grid gap-1 relative">
               <label
                 className="text-xs text-primary-marine-blue"
                 htmlFor="name"
@@ -36,7 +60,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 Name
               </label>
               <input
-                className="min-w-10 rounded-md border border-neutral-light-gray px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue"
+                className={`min-w-10 rounded-md border ${errors.name ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
                 type="text"
                 placeholder="e.g. Stephen King"
                 id="name"
@@ -46,6 +70,11 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                   setFormData((data) => ({ ...data, name: e.target.value }))
                 }
               ></input>
+              {errors.name && (
+                <div className="ml-auto text-sm font-bold text-primary-strawberry-red">
+                  {errors.name}
+                </div>
+              )}
             </div>
 
             <div className="grid gap-1">
@@ -56,7 +85,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 Email Address
               </label>
               <input
-                className="min-w-10 rounded-md border border-neutral-light-gray px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue"
+                className={`min-w-10 rounded-md border ${errors.email ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
                 type="email"
                 id="email"
                 name="email"
@@ -66,6 +95,11 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                   setFormData((data) => ({ ...data, email: e.target.value }))
                 }
               ></input>
+              {errors.email && (
+                <div className="ml-auto text-sm font-bold text-primary-strawberry-red">
+                  {errors.email}
+                </div>
+              )}
             </div>
 
             <div className="grid gap-1">
@@ -76,7 +110,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 Phone Number
               </label>
               <input
-                className="min-w-10 rounded-md border border-neutral-light-gray px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue"
+                className={`min-w-10 rounded-md border ${errors.phone ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
                 type="tel"
                 id="phone"
                 name="phone"
@@ -86,6 +120,11 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                   setFormData((data) => ({ ...data, phone: e.target.value }))
                 }
               ></input>
+              {errors.phone && (
+                <div className="ml-auto text-sm font-bold text-primary-strawberry-red">
+                  {errors.phone}
+                </div>
+              )}
             </div>
           </div>
         </fieldset>

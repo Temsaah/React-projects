@@ -20,7 +20,7 @@ function FormNavigation({ currStep, isFormValid, setCurrStep, setFormData }) {
         </button>
       )}
       <button
-        className="ml-auto rounded-md bg-primary-marine-blue px-5 py-2 lg:px-6 lg:py-3 text-sm font-medium text-white"
+        className="ml-auto rounded-md bg-primary-marine-blue hover:bg-primary-marine-blue/85 transition-colors px-5 py-2 lg:px-6 lg:py-3 text-sm font-medium text-white"
         onClick={handleNextStep}
       >
         {currStep === 4 ? "Confirm" : "Next Step"}
