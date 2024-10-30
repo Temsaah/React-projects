@@ -1,7 +1,10 @@
+import { useFormContext } from "@/FormContext";
 import FormNavigation from "@/FormNavigation";
 import { plans } from "@/plans";
 
-function FinishingUpForm({ formData, setFormData, currStep, setCurrStep }) {
+function FinishingUpForm() {
+  const { formData, setCurrStep } = useFormContext();
+
   const selectedPlan = plans.find((plan) => plan.name === formData.plan);
   const planPrice = selectedPlan.monthlyPrice;
 
@@ -30,7 +33,10 @@ function FinishingUpForm({ formData, setFormData, currStep, setCurrStep }) {
               <p className="text-sm font-medium text-primary-marine-blue">
                 {formData.plan} ({formData.billing})
               </p>
-              <button className="text-sm font-medium text-neutral-cool-gray underline">
+              <button
+                onClick={() => setCurrStep(2)}
+                className="text-sm text-neutral-cool-gray underline hover:text-primary-purplish-blue"
+              >
                 Change
               </button>
             </div>
@@ -56,7 +62,7 @@ function FinishingUpForm({ formData, setFormData, currStep, setCurrStep }) {
           </div>
           <div className="!mt-10 flex items-center justify-between">
             <p className="text-sm text-neutral-cool-gray">
-              Total (per {formData.plan === "Yearly" ? "year" : "month"})
+              Total (per {formData.billing === "Yearly" ? "year" : "month"})
             </p>
             <p className="font-semibold text-primary-purplish-blue">
               {formData.billing === "Yearly"
@@ -66,12 +72,7 @@ function FinishingUpForm({ formData, setFormData, currStep, setCurrStep }) {
           </div>
         </div>
       </form>
-      <FormNavigation
-        currStep={currStep}
-        isFormValid={isFormValid}
-        setCurrStep={setCurrStep}
-        setFormData={setFormData}
-      />
+      <FormNavigation isFormValid={isFormValid} />
     </>
   );
 }

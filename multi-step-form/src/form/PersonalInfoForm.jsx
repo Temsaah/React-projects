@@ -1,8 +1,9 @@
 import { useState } from "react";
 import FormNavigation from "../FormNavigation";
+import { useFormContext } from "@/FormContext";
 
-function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
-  const [isValid, setIsValid] = useState(false);
+function PersonalInfoForm() {
+  const { formData, setFormData } = useFormContext();
 
   const [errors, setErrors] = useState({
     name: "",
@@ -52,7 +53,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
           </p>
 
           <div className="grid gap-4 lg:gap-6">
-            <div className="grid gap-1 relative">
+            <div className="relative grid gap-1">
               <label
                 className="text-xs text-primary-marine-blue"
                 htmlFor="name"
@@ -60,7 +61,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 Name
               </label>
               <input
-                className={`min-w-10 rounded-md border ${errors.name ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
+                className={`min-w-10 rounded-md border ${errors.name ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2.5 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
                 type="text"
                 placeholder="e.g. Stephen King"
                 id="name"
@@ -71,13 +72,13 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 }
               ></input>
               {errors.name && (
-                <div className="ml-auto text-sm font-bold text-primary-strawberry-red">
+                <div className="absolute -top-1 right-0 text-sm font-bold text-primary-strawberry-red">
                   {errors.name}
                 </div>
               )}
             </div>
 
-            <div className="grid gap-1">
+            <div className="relative grid gap-1">
               <label
                 className="text-xs text-primary-marine-blue"
                 htmlFor="email"
@@ -85,7 +86,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 Email Address
               </label>
               <input
-                className={`min-w-10 rounded-md border ${errors.email ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
+                className={`min-w-10 rounded-md border ${errors.email ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2.5 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
                 type="email"
                 id="email"
                 name="email"
@@ -96,13 +97,13 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 }
               ></input>
               {errors.email && (
-                <div className="ml-auto text-sm font-bold text-primary-strawberry-red">
+                <div className="absolute -top-1 right-0 text-sm font-bold text-primary-strawberry-red">
                   {errors.email}
                 </div>
               )}
             </div>
 
-            <div className="grid gap-1">
+            <div className="relative grid gap-1">
               <label
                 className="text-xs text-primary-marine-blue"
                 htmlFor="phone"
@@ -110,7 +111,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 Phone Number
               </label>
               <input
-                className={`min-w-10 rounded-md border ${errors.phone ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
+                className={`min-w-10 rounded-md border ${errors.phone ? "border-primary-strawberry-red" : "border-neutral-light-gray"} px-5 py-2.5 font-medium text-primary-marine-blue placeholder:text-sm placeholder:font-semibold focus:outline focus:outline-primary-marine-blue`}
                 type="tel"
                 id="phone"
                 name="phone"
@@ -121,7 +122,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
                 }
               ></input>
               {errors.phone && (
-                <div className="ml-auto text-sm font-bold text-primary-strawberry-red">
+                <div className="absolute -top-1 right-0 text-sm font-bold text-primary-strawberry-red">
                   {errors.phone}
                 </div>
               )}
@@ -129,11 +130,7 @@ function PersonalInfoForm({ formData, setFormData, currStep, setCurrStep }) {
           </div>
         </fieldset>
       </form>
-      <FormNavigation
-        currStep={currStep}
-        isFormValid={isFormValid}
-        setCurrStep={setCurrStep}
-      />
+      <FormNavigation isFormValid={isFormValid} />
     </>
   );
 }

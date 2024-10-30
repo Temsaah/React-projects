@@ -1,6 +1,9 @@
+import { useFormContext } from "@/FormContext";
 import FormNavigation from "@/FormNavigation";
 
-function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
+function AddonsSelectionForm() {
+  const {formData, setFormData } = useFormContext();
+
   function handleAddonChange(id) {
     setFormData((prevData) => ({
       ...prevData,
@@ -13,7 +16,7 @@ function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
   function isFormValid() {}
   return (
     <>
-      <form className="relative lg:min-w-[400px] -top-14 rounded-xl p-8 lg:p-0 bg-white  shadow-xl lg:top-0 lg:shadow-none">
+      <form className="relative -top-14 rounded-xl bg-white p-8 shadow-xl lg:top-0 lg:min-w-[400px] lg:p-0 lg:shadow-none">
         <fieldset className="space-y-3">
           <legend className="text-2xl font-bold text-primary-marine-blue lg:text-3xl">
             Pick add-ons
@@ -27,7 +30,7 @@ function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
           {formData.addons.map((addon) => (
             <label
               key={addon.id}
-              className={`flex items-center gap-1 rounded-xl border ${addon.selected ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3`}
+              className={`flex items-center gap-1 rounded-xl border ${addon.selected ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3 hover:border-primary-purplish-blue hover:cursor-pointer transition-all`}
             >
               <input
                 className="peer h-5 w-5 accent-primary-purplish-blue"
@@ -54,9 +57,7 @@ function AddonsSelectionForm({ formData, setFormData, currStep, setCurrStep }) {
       </form>
 
       <FormNavigation
-        currStep={currStep}
         isFormValid={isFormValid}
-        setCurrStep={setCurrStep}
       />
     </>
   );

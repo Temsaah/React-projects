@@ -1,4 +1,8 @@
-function FormProgress({ currStep }) {
+import { useFormContext } from "./FormContext";
+
+function FormProgress() {
+  const { currStep } = useFormContext();
+
   const steps = [
     { num: 1, label: "Your Info" },
     { num: 2, label: "Select Plan" },
@@ -27,8 +31,8 @@ function StepIndicator({ step, isCurrent }) {
       <p
         className={
           isCurrent
-            ? "grid aspect-square h-8 w-8 place-items-center rounded-full bg-white text-sm font-medium"
-            : "grid h-8 w-8 place-items-center rounded-full border border-white text-sm font-bold text-white"
+            ? "grid aspect-square h-8 w-8 place-items-center rounded-full bg-white text-sm font-medium transition-colors duration-300"
+            : "grid h-8 w-8 place-items-center rounded-full border border-white text-sm font-bold text-white transition-colors duration-300"
         }
       >
         {step.num}
