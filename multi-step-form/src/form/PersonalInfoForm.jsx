@@ -1,9 +1,11 @@
 import { useState } from "react";
 import FormNavigation from "../FormNavigation";
 import { useFormContext } from "@/FormContext";
+import { useForm } from "react-hook-form";
 
 function PersonalInfoForm() {
   const { formData, setFormData } = useFormContext();
+  const {} = useForm;
 
   const [errors, setErrors] = useState({
     name: "",
@@ -22,8 +24,10 @@ function PersonalInfoForm() {
       setErrors((prev) => ({ ...prev, name: "This field is required" }));
     }
 
-    if (!validateEmail(formData.email)) {
+    if (!formData.email) {
       setErrors((prev) => ({ ...prev, email: "This field is required" }));
+    } else if (!validateEmail(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: "Invalid Email Address" }));
     }
 
     if (!formData.phone) {

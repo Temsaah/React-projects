@@ -2,7 +2,7 @@ import { useFormContext } from "@/FormContext";
 import FormNavigation from "@/FormNavigation";
 
 function AddonsSelectionForm() {
-  const {formData, setFormData } = useFormContext();
+  const { formData, setFormData } = useFormContext();
 
   function handleAddonChange(id) {
     setFormData((prevData) => ({
@@ -30,7 +30,7 @@ function AddonsSelectionForm() {
           {formData.addons.map((addon) => (
             <label
               key={addon.id}
-              className={`flex items-center gap-1 rounded-xl border ${addon.selected ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3 hover:border-primary-purplish-blue hover:cursor-pointer transition-all`}
+              className={`flex items-center gap-1 rounded-xl border ${addon.selected ? "border-primary-purplish-blue" : "border-neutral-cool-gray"} px-4 py-3 transition-all hover:cursor-pointer hover:border-primary-purplish-blue`}
             >
               <input
                 className="peer h-5 w-5 accent-primary-purplish-blue"
@@ -56,9 +56,7 @@ function AddonsSelectionForm() {
         </div>
       </form>
 
-      <FormNavigation
-        isFormValid={isFormValid}
-      />
+      <FormNavigation />
     </>
   );
 }

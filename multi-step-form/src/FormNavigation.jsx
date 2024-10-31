@@ -9,10 +9,11 @@ function FormNavigation({ isFormValid }) {
       return;
     }
 
-    if (isFormValid() !== false) {
+    if (!isFormValid || isFormValid()) {
       setCurrStep((step) => ++step);
     }
   }
+
   return (
     <div className="flex justify-between self-end">
       {currStep > 1 && (

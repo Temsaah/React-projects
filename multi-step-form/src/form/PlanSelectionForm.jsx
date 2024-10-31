@@ -5,12 +5,6 @@ import { useFormContext } from "@/FormContext";
 
 function PlanSelectionForm() {
   const { formData, setFormData } = useFormContext();
-
-  function isFormValid() {
-    if (formData.plan) return true;
-    return false;
-  }
-
   return (
     <>
       <form className="relative -top-14 rounded-xl bg-white p-8 shadow-xl lg:top-0 lg:p-0 lg:shadow-none">
@@ -106,7 +100,7 @@ function PlanSelectionForm() {
           </div>
         </fieldset>
       </form>
-      <FormNavigation isFormValid={isFormValid} />
+      <FormNavigation />
     </>
   );
 }
