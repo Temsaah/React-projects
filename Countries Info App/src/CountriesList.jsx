@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
-function CountriesList() {
+function CountriesList({ region }) {
   const [countries, setCountries] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
+    setIsLoading(true);
+
+    const url = region
+      ? `https://restcountries.com/v3.1/region/${region}`
+      : "https://restcountries.com/v3.1/all";
+
+    const startTime = Date.now();
+
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setCountries(data);
-      });
-  }, []);
+        const elapsedTime = Date.now() - startTime;
+        const minLoadingTime = 300;
+        const delay = Math.max(0, minLoadingTime - elapsedTime);
+
+        setTimeout(() => {
+          setCountries(data.sort((a, b) => b.population - a.population));
+          setIsLoading(false);
+        }, delay);
+      })
+      .catch(() => setIsLoading(false));
+  }, [region]);
 
   console.log(countries);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="mx-auto my-12 grid w-fit gap-16 px-10">
@@ -23,7 +43,6 @@ function CountriesList() {
 }
 
 function Country({ country }) {
-  console.log(country);
   return (
     <div className="grid max-w-[320px] grid-rows-[200px,1fr] shadow-md">
       <div className="rounded-lg">

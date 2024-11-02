@@ -5,7 +5,7 @@ import CountryExplorer from "./CountryExplorer";
 
 function App() {
 
-  return <div className="min-h-screen bg-neutral-very-light-gray">
+  return <div className="min-h-screen bg-neutral-very-light-gray grid grid-rows-[auto,1fr]">
     <Header/>
     <CountryExplorer/>
   </div>;

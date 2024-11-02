@@ -4,12 +4,12 @@ import { useState } from "react";
 import CountriesList from "./CountriesList";
 
 function CountryExplorer() {
-  const [region, setRegion] = useState("Filter By Region");
+  const [region, setRegion] = useState("");
   return (
-    <div>
+    <div className="grid grid-rows-[auto,auto,1fr]">
       <CountrySearchInput />
       <FilterByRegion region={region} setRegion={setRegion} />
-      <CountriesList />
+      <CountriesList region={region} />
     </div>
   );
 }
