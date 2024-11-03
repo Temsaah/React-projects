@@ -5,22 +5,25 @@ import CountriesList from "./CountriesList";
 
 function CountryExplorer() {
   const [region, setRegion] = useState("");
+  const [search, setSearch] = useState("");
   return (
     <div className="grid grid-rows-[auto,auto,1fr]">
-      <CountrySearchInput />
+      <CountrySearchInput search={search} setSearch={setSearch} />
       <FilterByRegion region={region} setRegion={setRegion} />
-      <CountriesList region={region} />
+      <CountriesList search={search} region={region} />
     </div>
   );
 }
 
-function CountrySearchInput() {
+function CountrySearchInput({ search, setSearch }) {
   return (
     <div className="relative m-5 select-none rounded-lg py-5 pl-24 shadow-md">
       <input
         className="w-full outline-none placeholder:text-base placeholder:text-neutral-dark-gray/60"
         type="text"
         placeholder="Search for a country..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
       />
       <Search
         size={20}

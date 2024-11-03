@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 
-function CountriesList({ region }) {
+function CountriesList({ region, search }) {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,42 +29,50 @@ function CountriesList({ region }) {
       .catch(() => setIsLoading(false));
   }, [region]);
 
-  console.log(countries);
+  console.log(!search);
 
   if (isLoading) return <Loading />;
 
   return (
     <div className="mx-auto my-12 grid w-fit gap-16 px-10">
-      {countries.map((country) => (
-        <Country key={country.cca2} country={country} />
-      ))}
+      {!search
+        ? countries.map((country) => (
+            <Country key={country.cca2} country={country} />
+          ))
+        : countries
+            .filter((country) =>
+              country.name.common.toLowerCase().includes(search.toLowerCase()),
+            )
+            .map((country) => <Country key={country.cca2} country={country} />)}
     </div>
   );
 }
 
 function Country({ country }) {
   return (
-    <div className="grid max-w-[320px] grid-rows-[200px,1fr] shadow-md">
-      <div className="rounded-lg">
-        <img
-          className="h-full w-full rounded-t-lg"
-          src={country.flags.png}
-        ></img>
-      </div>
-      <div className="space-y-1 bg-white px-8 pb-10 pt-8">
-        <p className="mb-5 text-2xl font-bold">{country.name?.common}</p>
-        <p className="font-semibold">
-          Population:{" "}
-          <span className="font-normal">
-            {country?.population.toLocaleString()}
-          </span>
-        </p>
-        <p className="font-semibold">
-          Region: <span className="font-normal">{country?.region}</span>
-        </p>
-        <p className="font-semibold">
-          Capital: <span className="font-normal">{country?.capital}</span>
-        </p>
+    <div className="p-3">
+      <div className="grid max-w-[320px] grid-rows-[200px,1fr] rounded-lg shadow-md">
+        <div className="rounded-lg">
+          <img
+            className="h-full w-full rounded-t-lg"
+            src={country.flags.png}
+          ></img>
+        </div>
+        <div className="space-y-1 bg-white px-8 pb-10 pt-8">
+          <p className="mb-5 text-2xl font-bold">{country.name?.common}</p>
+          <p className="font-semibold">
+            Population:{" "}
+            <span className="font-normal">
+              {country?.population.toLocaleString()}
+            </span>
+          </p>
+          <p className="font-semibold">
+            Region: <span className="font-normal">{country?.region}</span>
+          </p>
+          <p className="font-semibold">
+            Capital: <span className="font-normal">{country?.capital}</span>
+          </p>
+        </div>
       </div>
     </div>
   );
