@@ -1,16 +1,16 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-function Dropdown({ region, setRegion }) {
+function Dropdown({ currRegion, setRegion }) {
   const [isOpen, setIsOpen] = useState(false);
   const regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
   return (
-    <div className="relative mx-5 mt-7 w-1/2 max-w-64 select-none">
+    <div className="sm relative z-50 w-1/2 max-w-64 select-none">
       <div
         className="flex cursor-pointer items-center justify-between rounded-lg px-7 py-5 shadow-md"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <button>{region ? region : "Filter by Region"}</button>
+        <button>{currRegion ? currRegion : "Filter by Region"}</button>
         <ChevronDown size={17} />
       </div>
 
@@ -20,7 +20,7 @@ function Dropdown({ region, setRegion }) {
             return (
               <div
                 key={region}
-                className="cursor-pointer px-7 py-2 text-sm font-medium hover:bg-neutral-dark-gray/10"
+                className={`cursor-pointer ${region === currRegion ? "bg-neutral-dark-gray/40" : "hover:bg-neutral-dark-gray/10"} px-7 py-2 text-sm font-medium`}
                 onClick={() => {
                   setRegion(region);
                   setIsOpen(false);

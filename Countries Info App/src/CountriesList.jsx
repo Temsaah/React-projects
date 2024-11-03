@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 
-function CountriesList({ region, search }) {
+function CountriesList({ region, search, sortBy }) {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(countries);
   useEffect(() => {
     setIsLoading(true);
 
@@ -22,14 +23,28 @@ function CountriesList({ region, search }) {
         const delay = Math.max(0, minLoadingTime - elapsedTime);
 
         setTimeout(() => {
-          setCountries(data.sort((a, b) => b.population - a.population));
+          let sortedData = [...data];
+
+          if (sortBy === "Alphabetically (A-Z)") {
+            sortedData.sort((a, b) =>
+              a.name.common.localeCompare(b.name.common),
+            );
+          } else if (sortBy === "Alphabetically (Z-A)") {
+            sortedData.sort((a, b) =>
+              b.name.common.localeCompare(a.name.common),
+            );
+          } else if (sortBy === "Population (Low to High)") {
+            sortedData.sort((a, b) => a.population - b.population);
+          } else if (sortBy === "Population (High to Low)") {
+            sortedData.sort((a, b) => b.population - a.population);
+          }
+
+          setCountries(sortedData);
           setIsLoading(false);
         }, delay);
       })
       .catch(() => setIsLoading(false));
-  }, [region]);
-
-  console.log(!search);
+  }, [region, sortBy]);
 
   if (isLoading) return <Loading />;
 
@@ -69,9 +84,11 @@ function Country({ country }) {
           <p className="font-semibold">
             Region: <span className="font-normal">{country?.region}</span>
           </p>
-          <p className="font-semibold">
-            Capital: <span className="font-normal">{country?.capital}</span>
-          </p>
+          {country.capital && (
+            <p className="font-semibold">
+              Capital: <span className="font-normal">{country.capital}</span>
+            </p>
+          )}
         </div>
       </div>
     </div>

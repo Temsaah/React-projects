@@ -1,16 +1,30 @@
-import { ChevronDown, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Dropdown from "./components/Dropdown";
 import { useState } from "react";
 import CountriesList from "./CountriesList";
+import SortByDropdown from "./components/SortByDropdown";
 
 function CountryExplorer() {
   const [region, setRegion] = useState("");
   const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("Alphabetically (A-Z)");
+  const [sortOrder, setSortOrder] = useState("asc");
+
   return (
     <div className="grid grid-rows-[auto,auto,1fr]">
       <CountrySearchInput search={search} setSearch={setSearch} />
-      <FilterByRegion region={region} setRegion={setRegion} />
-      <CountriesList search={search} region={region} />
+      <FilterByRegion
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        region={region}
+        setRegion={setRegion}
+      />
+      <CountriesList
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        search={search}
+        region={region}
+      />
     </div>
   );
 }
@@ -34,8 +48,25 @@ function CountrySearchInput({ search, setSearch }) {
   );
 }
 
-function FilterByRegion({ region, setRegion }) {
-  return <Dropdown region={region} setRegion={setRegion} />;
+function FilterByRegion({
+  region,
+  setRegion,
+  sortBy,
+  setSortBy,
+  sortOrder,
+  setSortOrder,
+}) {
+  return (
+    <div className="mt-7 flex flex-wrap items-center justify-between gap-0 px-5">
+      <Dropdown currRegion={region} setRegion={setRegion} />
+      <SortByDropdown
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder}
+      />
+    </div>
+  );
 }
 
 export default CountryExplorer;
