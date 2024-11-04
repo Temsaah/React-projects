@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 
-function CountriesList({ region, search, sortBy }) {
+function CountriesList({ region, search, sortBy, setSelectedCountry }) {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,31 +49,44 @@ function CountriesList({ region, search, sortBy }) {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="mx-auto my-12 grid w-fit gap-16 px-10">
+    <div className="mx-auto my-12 grid w-full gap-16 px-10">
       {!search
         ? countries.map((country) => (
-            <Country key={country.cca2} country={country} />
+            <Country
+              key={country.cca2}
+              country={country}
+              setSelectedCountry={setSelectedCountry}
+            />
           ))
         : countries
             .filter((country) =>
               country.name.common.toLowerCase().includes(search.toLowerCase()),
             )
-            .map((country) => <Country key={country.cca2} country={country} />)}
+            .map((country) => (
+              <Country
+                key={country.cca2}
+                country={country}
+                setSelectedCountry={setSelectedCountry}
+              />
+            ))}
     </div>
   );
 }
 
-function Country({ country }) {
+function Country({ country, setSelectedCountry }) {
   return (
-    <div className="p-3">
-      <div className="grid max-w-[320px] grid-rows-[200px,1fr] rounded-lg shadow-md">
+    <div
+      className="mx-auto rounded-xl p-3 dark:bg-neutral-very-dark-blue-text/10"
+      onClick={() => setSelectedCountry(country)}
+    >
+      <div className="grid w-full max-w-[320px] grid-rows-[200px,1fr] rounded-lg shadow-md">
         <div className="rounded-lg">
           <img
-            className="h-full w-full rounded-t-lg"
-            src={country.flags.png}
+            className="h-full w-[320px] min-w-0 rounded-t-lg"
+            src={country.flags.svg}
           ></img>
         </div>
-        <div className="space-y-1 bg-white px-8 pb-10 pt-8">
+        <div className="space-y-1 rounded-b-lg bg-white px-8 pb-10 pt-8 dark:bg-neutral-dark-blue dark:text-white">
           <p className="mb-5 text-2xl font-bold">{country.name?.common}</p>
           <p className="font-semibold">
             Population:{" "}
