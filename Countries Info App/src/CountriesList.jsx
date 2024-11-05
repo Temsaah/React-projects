@@ -5,7 +5,6 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(countries);
   useEffect(() => {
     setIsLoading(true);
 
@@ -49,7 +48,7 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="mx-auto my-12 grid w-full gap-16 px-10">
+    <div className="my-12 grid grid-cols-1 justify-items-center gap-16 px-5">
       {!search
         ? countries.map((country) => (
             <Country
@@ -76,13 +75,13 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
 function Country({ country, setSelectedCountry }) {
   return (
     <div
-      className="mx-auto rounded-xl p-3 dark:bg-neutral-very-dark-blue-text/10"
+      className="w-full max-w-[320px] rounded-xl p-3 dark:bg-neutral-very-dark-blue-text/10 cursor-pointer hover:scale-[1.02] transition-all duration-300"
       onClick={() => setSelectedCountry(country)}
     >
       <div className="grid w-full max-w-[320px] grid-rows-[200px,1fr] rounded-lg shadow-md">
         <div className="rounded-lg">
           <img
-            className="h-full w-[320px] min-w-0 rounded-t-lg"
+            className="h-full w-full min-w-0 rounded-t-lg object-cover"
             src={country.flags.svg}
           ></img>
         </div>

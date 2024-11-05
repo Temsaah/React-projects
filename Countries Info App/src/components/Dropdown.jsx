@@ -5,13 +5,15 @@ function Dropdown({ currRegion, setRegion }) {
   const [isOpen, setIsOpen] = useState(false);
   const regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
   return (
-    <div className="sm relative z-50 w-1/2 max-w-64 select-none dark:bg-neutral-dark-blue rounded-xl">
+    <div className="sm relative z-50 w-1/2 max-w-64 select-none rounded-xl dark:bg-neutral-dark-blue">
       <div
-        className="flex cursor-pointer items-center justify-between rounded-lg px-7 py-5 shadow-md"
+        className="flex cursor-pointer flex-wrap justify-between rounded-lg px-7 py-5 shadow-md"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <button className="dark:text-white">{currRegion ? currRegion : "Filter by Region"}</button>
-        <ChevronDown className="dark:text-white" size={17} />
+        <button className="dark:text-white text-sm xs:text-base">
+          {currRegion ? currRegion : "Filter by Region"}
+        </button>
+        <ChevronDown className="absolute right-3 dark:text-white xs:mt-1  " size={17} />
       </div>
 
       {isOpen && (

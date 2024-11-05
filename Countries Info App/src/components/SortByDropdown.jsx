@@ -1,7 +1,7 @@
 import { ArrowUpDown } from "lucide-react";
 import { useState } from "react";
 
-function SortByDropdown({ sortBy, setSortBy, sortOrder, setSortOrder }) {
+function SortByDropdown({ sortBy, setSortBy }) {
   const [isOpen, setIsOpen] = useState(false);
   const sortMethods = [
     "Alphabetically (A-Z)",

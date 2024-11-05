@@ -38,12 +38,15 @@ function CountryExplorer() {
         className={`${selectedCountry ? "hidden" : "grid"} grid-rows-[auto,auto,1fr] overflow-auto`}
       >
         <CountrySearchInput search={search} setSearch={setSearch} />
-        <FilterByRegion
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          region={region}
-          setRegion={setRegion}
-        />
+        <div className="mt-7 flex flex-wrap items-center justify-between gap-0 px-5">
+          <FilterByRegion
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            region={region}
+            setRegion={setRegion}
+          />
+          <SortByDropdown sortBy={sortBy} setSortBy={setSortBy} />
+        </div>
 
         <CountriesList
           sortBy={sortBy}
@@ -58,7 +61,7 @@ function CountryExplorer() {
 
 function CountrySearchInput({ search, setSearch }) {
   return (
-    <div className="relative m-5 select-none rounded-lg py-5 pl-24 shadow-md dark:bg-neutral-dark-blue">
+    <div className="relative m-5 select-none rounded-lg py-5 pl-24 shadow-md dark:bg-neutral-dark-blue dark:text-white">
       <input
         className="w-full outline-none placeholder:text-base placeholder:text-neutral-dark-gray/60 dark:bg-neutral-dark-blue dark:placeholder:text-white"
         type="text"
@@ -82,17 +85,7 @@ function FilterByRegion({
   sortOrder,
   setSortOrder,
 }) {
-  return (
-    <div className="mt-7 flex flex-wrap items-center justify-between gap-0 px-5">
-      <Dropdown currRegion={region} setRegion={setRegion} />
-      <SortByDropdown
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        sortOrder={sortOrder}
-        setSortOrder={setSortOrder}
-      />
-    </div>
-  );
+  return <Dropdown currRegion={region} setRegion={setRegion} />;
 }
 
 export default CountryExplorer;
