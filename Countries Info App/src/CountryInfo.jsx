@@ -116,19 +116,17 @@ function CountryInfo({ country, onBack }) {
             country.borders && (
               <div className="space-y-5">
                 <p className="text-xl font-semibold">Border Countries:</p>
-                <div
-                  className={`grid grid-cols-${Math.min(borderNames.length, 2)} items-center gap-5 text-center text-sm font-light xs:grid-cols-${Math.min(borderNames.length, 3)}`}
-                >
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center gap-5 text-center text-sm font-light">
                   {borderNames.map((borderName) => (
                     <p
                       key={borderName}
-                      className="rounded-lg border border-neutral-dark-gray/40 py-2 shadow-md"
+                      className="rounded-md bg-neutral-dark-blue py-2 shadow-[0px_0px_15px_3px_rgba(0,_0,_0,_0.1)]"
                     >
                       {borderName}
                     </p>
                   ))}
                   {error && (
-                    <p className="rounded-lg border border-neutral-dark-gray/40 py-2 shadow-md">
+                    <p className="rounded-md bg-neutral-dark-blue py-2 shadow-[0px_0px_15px_3px_rgba(0,_0,_0,_0.1)]">
                       {error}
                     </p>
                   )}

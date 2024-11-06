@@ -48,7 +48,7 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="my-12 grid grid-cols-1 justify-items-center gap-16 px-5">
+    <div className="my-12 grid grid-cols-[repeat(auto-fit,minmax(0,280px))] justify-center gap-20 md:justify-between">
       {!search
         ? countries.map((country) => (
             <Country
@@ -75,10 +75,10 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
 function Country({ country, setSelectedCountry }) {
   return (
     <div
-      className="w-full max-w-[320px] rounded-xl p-3 dark:bg-neutral-very-dark-blue-text/10 cursor-pointer hover:scale-[1.02] transition-all duration-300"
+      className="x w-full cursor-pointer rounded-xl p-1.5 transition-all duration-300 hover:scale-[1.04] dark:bg-neutral-very-dark-blue-text/10"
       onClick={() => setSelectedCountry(country)}
     >
-      <div className="grid w-full max-w-[320px] grid-rows-[200px,1fr] rounded-lg shadow-md">
+      <div className="x grid h-full w-full grid-rows-[200px,1fr] rounded-lg shadow-md">
         <div className="rounded-lg">
           <img
             className="h-full w-full min-w-0 rounded-t-lg object-cover"

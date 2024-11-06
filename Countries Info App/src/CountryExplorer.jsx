@@ -25,7 +25,7 @@ function CountryExplorer() {
   }, [selectedCountry]);
 
   return (
-    <div>
+    <div className="px-5 md:px-10 w-full mx-auto max-w-[1440px]">
       {selectedCountry && (
         <CountryInfo
           country={selectedCountry}
@@ -38,7 +38,7 @@ function CountryExplorer() {
         className={`${selectedCountry ? "hidden" : "grid"} grid-rows-[auto,auto,1fr] overflow-auto`}
       >
         <CountrySearchInput search={search} setSearch={setSearch} />
-        <div className="mt-7 flex flex-wrap items-center justify-between gap-0 px-5">
+        <div className="mt-7 flex flex-wrap items-center justify-between gap-0">
           <FilterByRegion
             sortBy={sortBy}
             setSortBy={setSortBy}
@@ -61,7 +61,7 @@ function CountryExplorer() {
 
 function CountrySearchInput({ search, setSearch }) {
   return (
-    <div className="relative m-5 select-none rounded-lg py-5 pl-24 shadow-md dark:bg-neutral-dark-blue dark:text-white">
+    <div className="relative my-5 select-none rounded-lg py-5 pl-24 shadow-md dark:bg-neutral-dark-blue dark:text-white lg:max-w-[40%]">
       <input
         className="w-full outline-none placeholder:text-base placeholder:text-neutral-dark-gray/60 dark:bg-neutral-dark-blue dark:placeholder:text-white"
         type="text"
