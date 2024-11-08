@@ -35,7 +35,7 @@ function CountryExplorer() {
         />
       )}
       <div
-        className={`${selectedCountry ? "hidden" : "grid"} grid-rows-[auto,auto,1fr] overflow-auto`}
+        className={`${selectedCountry ? "hidden" : "grid"} grid-rows-[auto,auto,1fr] `}
       >
         <CountrySearchInput search={search} setSearch={setSearch} />
         <div className="mt-7 flex flex-wrap items-center justify-between gap-0">
