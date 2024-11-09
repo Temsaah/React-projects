@@ -1,9 +1,13 @@
 ---
 
 Set Sort by ✅
-3d Card Hover => On hover show smth country is popular with
-Dark Mode
+3d Card Hover => On hover show smth country is popular with ✅
+Dark Mode ✅
 Custom style to your country using geolocation API
 1X Your currency = ?X of the viewable country currency
 Lazy Loading ?
 ---
+
+
+useCallback on handleSelectCountry to prevent unnecessary re-renders
+useMemo on sortedCountries to prevent re-fetching after sorting

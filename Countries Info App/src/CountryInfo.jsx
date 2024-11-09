@@ -59,7 +59,7 @@ function CountryInfo({ country, onBack }) {
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-24">
           <div className="mb-10 max-w-[400px] overflow-hidden lg:mb-0 lg:h-full lg:max-w-full">
             <img
-              className="max-h-[300px] w-full lg:h-full lg:max-h-full lg:object-cover lg:object-left"
+              className="max-h-[300px] w-full lg:h-full lg:max-h-[400px] lg:object-cover lg:object-left"
               src={country.flags.svg}
               alt=""
             />
@@ -124,7 +124,7 @@ function CountryInfo({ country, onBack }) {
                   <p className="text-xl font-semibold lg:text-base">
                     Border Countries:
                   </p>
-                  <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center gap-5 text-center text-sm font-light lg:flex-1 lg:grid-cols-[repeat(auto-fit,minmax(90px,1fr))]">
+                  <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] items-center gap-5 text-center text-sm font-light lg:flex-1 overflow-auto max-h-[100px]">
                     {borderNames.map((borderName) => (
                       <p
                         key={borderName}

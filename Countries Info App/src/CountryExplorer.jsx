@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 import Dropdown from "./components/Dropdown";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CountriesList from "./CountriesList";
 import SortByDropdown from "./components/SortByDropdown";
 import CountryInfo from "./CountryInfo";
@@ -13,10 +13,10 @@ function CountryExplorer() {
 
   const scrollPosition = useRef(0);
 
-  const handleSelectCountry = (country) => {
+  const handleSelectCountry = useCallback((country) => {
     scrollPosition.current = window.scrollY;
     setSelectedCountry(country);
-  };
+  }, []);
 
   useEffect(() => {
     if (!selectedCountry) {
@@ -25,7 +25,7 @@ function CountryExplorer() {
   }, [selectedCountry]);
 
   return (
-    <div className="px-5 md:px-10 w-full mx-auto max-w-[1440px]">
+    <div className="mx-auto w-full max-w-[1440px] px-5 md:px-10">
       {selectedCountry && (
         <CountryInfo
           country={selectedCountry}
@@ -35,7 +35,7 @@ function CountryExplorer() {
         />
       )}
       <div
-        className={`${selectedCountry ? "hidden" : "grid"} grid-rows-[auto,auto,1fr] `}
+        className={`${selectedCountry ? "hidden" : "grid"} grid-rows-[auto,auto,1fr]`}
       >
         <CountrySearchInput search={search} setSearch={setSearch} />
         <div className="mt-7 flex flex-wrap items-center justify-between gap-0">
