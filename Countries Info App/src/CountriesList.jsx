@@ -3,7 +3,27 @@ import Loading from "./Loading";
 
 function CountriesList({ region, search, sortBy, setSelectedCountry }) {
   const [countries, setCountries] = useState([]);
+  const [userCountry, setUserCountry] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      const API_KEY = "71b39328e04449f48f86d6fb175b2d40";
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${API_KEY}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const countryName = data.results[0]?.components?.country;
+
+        if (countryName) setUserCountry(countryName);
+      } catch (error) {
+        console.error("Error fetching country data:", error);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -55,6 +75,7 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
               key={country.cca2}
               country={country}
               setSelectedCountry={setSelectedCountry}
+              isUserCountry={userCountry === country.name.common}
             />
           ))
         : sortedCountries
@@ -66,6 +87,7 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
                 key={country.cca2}
                 country={country}
                 setSelectedCountry={setSelectedCountry}
+                isUserCountry={userCountry === country.name.common}
               />
             ))}
     </div>
@@ -126,15 +148,12 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
 //   );
 // }
 
-
-
-
-
-const Country = React.memo(({ country, setSelectedCountry }) => {
+const Country = React.memo(({ country, setSelectedCountry, isUserCountry }) => {
   return (
     <div
       className={`group relative ${country?.coatOfArms.svg ? "" : "rounded-lg shadow-md transition-all duration-300 hover:scale-105"}`}
     >
+      {isUserCountry && <CountryBadge />}
       {country?.coatOfArms.svg && (
         <Landmark imageSrc={country.coatOfArms.svg} />
       )}
@@ -149,8 +168,8 @@ const Country = React.memo(({ country, setSelectedCountry }) => {
         <div
           className={
             country?.coatOfArms.svg
-              ? "relative grid h-full w-full origin-bottom transform grid-rows-[200px,1fr] rounded-lg shadow-md transition-transform duration-500 ease-out group-hover:shadow-[2px_35px_32px_-8px_rgba(0,0,0,0.75)] group-hover:[transform:rotateX(25deg)_translateY(-5%)]"
-              : "relative grid h-full w-full rounded-lg shadow-md"
+              ? `relative grid h-full w-full origin-bottom transform grid-rows-[200px,1fr] rounded-lg shadow-md transition-transform duration-500 ease-out group-hover:shadow-[2px_35px_32px_-8px_rgba(0,0,0,0.75)] group-hover:[transform:rotateX(25deg)_translateY(-5%)] ${isUserCountry ? "shadow-[0_0_15px_3px_rgba(0,4,255,0.7)] ring-2 dark:shadow-[0_0_15px_3px_rgba(0,132,255,0.7)]" : ""}`
+              : `relative grid h-full w-full rounded-lg shadow-md ${isUserCountry ? "shadow-[0_0_15px_3px_rgba(0,4,255,0.7)] ring-2 dark:shadow-[0_0_15px_3px_rgba(0,132,255,0.7)]" : ""}`
           }
         >
           {country?.coatOfArms.svg && <GradientOverlay />}
@@ -193,6 +212,14 @@ function Landmark({ imageSrc }) {
   return (
     <div className="pointer-events-none absolute bottom-0 z-10 flex h-[70%] w-full justify-center opacity-0 transition-all duration-500 ease-out group-hover:-translate-y-1/2 group-hover:opacity-100">
       <img className=" " src={imageSrc}></img>
+    </div>
+  );
+}
+
+function CountryBadge() {
+  return (
+    <div className="pointer-events-none absolute -top-10 z-50 w-full rounded-lg text-center text-2xl font-extrabold text-black transition-opacity duration-300 group-hover:opacity-0 dark:text-yellow-500">
+      <p>Your Country</p>
     </div>
   );
 }
