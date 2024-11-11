@@ -1,22 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Loading from "./Loading";
-import { useQuery } from "@tanstack/react-query";
-
-function fetchCountries(region) {
-  const url = region
-    ? `https://restcountries.com/v3.1/region/${region}`
-    : "https://restcountries.com/v3.1/all";
-
-  return fetch(url).then((res) => res.json());
-}
 
 function CountriesList({ region, search, sortBy, setSelectedCountry }) {
+  const [countries, setCountries] = useState([]);
   const [userCountry, setUserCountry] = useState("");
-  const { data: countries = [], isLoading } = useQuery({
-    queryKey: ["countries", region],
-    queryFn: () => fetchCountries(region),
-    staleTime: 1000 * 60 * 5,
-  });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async (position) => {
@@ -36,6 +24,30 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
       }
     });
   }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const url = region
+      ? `https://restcountries.com/v3.1/region/${region}`
+      : "https://restcountries.com/v3.1/all";
+
+    const startTime = Date.now();
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const elapsedTime = Date.now() - startTime;
+        const minLoadingTime = 300;
+        const delay = Math.max(0, minLoadingTime - elapsedTime);
+
+        setTimeout(() => {
+          setCountries(data);
+          setIsLoading(false);
+        }, delay);
+      })
+      .catch(() => setIsLoading(false));
+  }, [region]);
 
   const sortedCountries = useMemo(() => {
     let sorted = [...countries];
@@ -206,7 +218,7 @@ function Landmark({ imageSrc }) {
 
 function CountryBadge() {
   return (
-    <div className="pointer-events-none absolute -top-10 z-40 w-full rounded-lg text-center text-2xl font-extrabold text-black transition-opacity duration-300 group-hover:opacity-0 dark:text-yellow-500">
+    <div className="pointer-events-none absolute -top-10 z-50 w-full rounded-lg text-center text-2xl font-extrabold text-black transition-opacity duration-300 group-hover:opacity-0 dark:text-yellow-500">
       <p>Your Country</p>
     </div>
   );

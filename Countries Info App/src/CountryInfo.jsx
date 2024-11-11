@@ -59,7 +59,7 @@ function CountryInfo({ country, onBack }) {
         <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-24">
           <div className="mb-10 max-w-[400px] overflow-hidden lg:mb-0 lg:h-full lg:max-w-full">
             <img
-              className="max-h-[300px] w-full lg:h-full lg:max-h-[400px] lg:object-cover lg:object-left"
+              className="max-h-[300px] w-full lg:h-full lg:max-h-[400px] lg:object-cover lg:object-center"
               src={country.flags.svg}
               alt=""
             />
