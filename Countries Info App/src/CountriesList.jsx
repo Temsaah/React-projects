@@ -10,15 +10,8 @@ function fetchCountries(region) {
   return fetch(url).then((res) => res.json());
 }
 
-function CountriesList({ region, search, sortBy, setSelectedCountry }) {
-  const [userCountry, setUserCountry] = useState("");
-  const { data: countries = [], isLoading } = useQuery({
-    queryKey: ["countries", region],
-    queryFn: () => fetchCountries(region),
-    staleTime: 1000 * 60 * 5,
-  });
-
-  useEffect(() => {
+function fetchUserCountry() {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
 
@@ -28,14 +21,45 @@ function CountriesList({ region, search, sortBy, setSelectedCountry }) {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        const countryName = data.results[0]?.components?.country;
 
-        if (countryName) setUserCountry(countryName);
+        resolve(data.results[0]?.components?.country || "");
       } catch (error) {
-        console.error("Error fetching country data:", error);
+        reject("Error Fetching data");
       }
     });
-  }, []);
+  });
+}
+
+function CountriesList({ region, search, sortBy, setSelectedCountry }) {
+  const { data: userCountry } = useQuery({
+    queryKey: ["userCountry"],
+    queryFn: fetchUserCountry,
+    retry: false,
+  });
+  const { data: countries = [], isLoading } = useQuery({
+    queryKey: ["countries", region],
+    queryFn: () => fetchCountries(region),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(async (position) => {
+  //     const { latitude, longitude } = position.coords;
+
+  //     const API_KEY = "71b39328e04449f48f86d6fb175b2d40";
+  //     const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${API_KEY}`;
+
+  //     try {
+  //       const response = await fetch(url);
+  //       const data = await response.json();
+  //       const countryName = data.results[0]?.components?.country;
+
+  //       if (countryName) setUserCountry(countryName);
+  //     } catch (error) {
+  //       console.error("Error fetching country data:", error);
+  //     }
+  //   });
+  // }, []);
 
   const sortedCountries = useMemo(() => {
     let sorted = [...countries];
