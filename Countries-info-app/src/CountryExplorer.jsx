@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import Dropdown from "./components/Dropdown";
 import { useCallback, useEffect, useRef, useState } from "react";
 import CountriesList from "./CountriesList";
@@ -13,10 +13,10 @@ function CountryExplorer() {
 
   const scrollPosition = useRef(0);
 
-  const handleSelectCountry = useCallback((country) => {
+  const handleSelectCountry = (country) => {
     scrollPosition.current = window.scrollY;
     setSelectedCountry(country);
-  }, []);
+  };
 
   useEffect(() => {
     if (!selectedCountry) {
@@ -39,12 +39,7 @@ function CountryExplorer() {
       >
         <CountrySearchInput search={search} setSearch={setSearch} />
         <div className="mt-7 flex flex-wrap items-center justify-between gap-0">
-          <FilterByRegion
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            region={region}
-            setRegion={setRegion}
-          />
+          <FilterByRegion region={region} setRegion={setRegion} />
           <SortByDropdown sortBy={sortBy} setSortBy={setSortBy} />
         </div>
 
@@ -77,15 +72,23 @@ function CountrySearchInput({ search, setSearch }) {
   );
 }
 
-function FilterByRegion({
-  region,
-  setRegion,
-  sortBy,
-  setSortBy,
-  sortOrder,
-  setSortOrder,
-}) {
-  return <Dropdown currRegion={region} setRegion={setRegion} />;
+function FilterByRegion({ region, setRegion }) {
+  const regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
+
+  return (
+    <Dropdown
+      label={"Filter by region"}
+      icon={
+        <ChevronDown
+          className="absolute right-3 dark:text-white xs:mt-1"
+          size={17}
+        />
+      }
+      options={regions}
+      selected={region}
+      setSelected={setRegion}
+    />
+  );
 }
 
 export default CountryExplorer;
