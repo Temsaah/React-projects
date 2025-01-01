@@ -8,12 +8,14 @@ import Rules from "./Rules";
 function App() {
   const [showRules, setShowRules] = useState(false);
   return (
-    <div className="bg-radial-bg grid min-h-screen grid-rows-[auto,1fr,auto] p-7">
-      {showRules && <Rules />}
-      <Header />
-      <Game />
-      <Footer setShowRules={setShowRules} />
-    </div>
+    <>
+      {showRules && <Rules setShowRules={setShowRules} />}
+      <div className="grid min-h-screen grid-rows-[auto,1fr,auto] bg-radial-bg p-7">
+        <Header />
+        <Game />
+        <Footer setShowRules={setShowRules} />
+      </div>
+    </>
   );
 }
 
