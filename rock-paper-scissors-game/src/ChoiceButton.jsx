@@ -8,6 +8,12 @@ const choiceImages = {
   scissors,
 };
 
+const gradientClasses = {
+  rock: "from-rock-from to-rock-to",
+  paper: "from-paper-from to-paper-to",
+  scissors: "from-scissors-from to-scissors-to",
+};
+
 function ChoiceButton({ choice, setUserSelection, result }) {
   let positionClasses = "";
 
@@ -27,7 +33,7 @@ function ChoiceButton({ choice, setUserSelection, result }) {
 
   return (
     <button
-      className={`absolute ${positionClasses} flex items-center justify-center rounded-full bg-gradient-to-t ${`from-${choice}-from`} ${`to-${choice}-to`} p-4 shadow-[inset_0px_-6px_3px_0px_rgba(0,_0,_0,_0.35)] transition-all ${!result ? "hover:scale-110" : "pointer-events-none"} select-none`}
+      className={`absolute ${positionClasses} flex items-center justify-center rounded-full bg-gradient-to-t ${gradientClasses[choice]} p-4 shadow-[inset_0px_-6px_3px_0px_rgba(0,_0,_0,_0.35)] transition-all ${!result ? "hover:scale-110" : "pointer-events-none"} select-none`}
       onClick={() => setUserSelection(choice)}
     >
       <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-[inset_0px_7px_1px_0px_rgba(0,_0,_0,_0.15)]">
