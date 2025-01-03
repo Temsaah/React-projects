@@ -44,13 +44,13 @@ function GameDecide({ setUserSelection }) {
 const choices = ["rock", "paper", "scissors"];
 
 function GameResult({ userChoice, setScore, setUserSelection }) {
-  const [randomizedHouseCoice, setRandomizedHouseChoice] = useState(null);
+  const [randomizedHouseChoice, setRandomizedHouseChoice] = useState(null);
   const [houseChoice, setHouseChoice] = useState(null);
   const [result, setResult] = useState(null);
   const [counter, setCounter] = useState(0);
   const countTimes = useRef(0);
 
-  const decideResult = useCallback(() => {
+  function decideResult() {
     if (userChoice === houseChoice) return "Draw";
     if (
       (userChoice === "rock" && houseChoice === "scissors") ||
@@ -60,64 +60,61 @@ function GameResult({ userChoice, setScore, setUserSelection }) {
       return "Win";
     }
     return "Lose";
-  }, [userChoice, houseChoice]);
-
-  // Memoized function to prevent unnecessary updates
-  const calculateScore = useCallback(
-    (result) => {
-      setScore((prevScore) => {
-        if (result === "Win") return prevScore + 1;
-        if (result === "Lose") return Math.max(0, prevScore - 1);
-        return prevScore;
-      });
-    },
-    [setScore],
-  );
+  }
 
   useEffect(() => {
-    let interval;
-    if (countTimes.current < 10) {
-      interval = setInterval(() => {
-        setCounter((prev) => (prev + 1) % choices.length);
-        setRandomizedHouseChoice(choices[counter]);
-        countTimes.current = countTimes.current + 1;
-      }, 100);
-    } else {
-      clearInterval(interval);
-      setHouseChoice(choices[Math.floor(Math.random() * 3)]);
-    }
+    let count = 0;
 
-    return () => clearInterval(interval);
-  }, [counter]);
+    const shuffleHouseChoice = () => {
+      if (count < 10) {
+        setRandomizedHouseChoice(choices[count % 3]);
+        count++;
+        setTimeout(shuffleHouseChoice, 100);
+      } else {
+        setHouseChoice(choices[Math.floor(Math.random() * 3)]);
+      }
+    };
+
+    shuffleHouseChoice();
+  }, []);
 
   useEffect(() => {
-    if (houseChoice) {
-      const result = decideResult();
-      setResult(result);
-      calculateScore(result);
-    }
-  }, [houseChoice, calculateScore, decideResult]);
+    if (!houseChoice) return;
+
+    const result =
+      userChoice === houseChoice
+        ? "Draw"
+        : (userChoice === "rock" && houseChoice === "scissors") ||
+            (userChoice === "paper" && houseChoice === "rock") ||
+            (userChoice === "scissors" && houseChoice === "paper")
+          ? "Win"
+          : "Lose";
+
+    console.log(result);
+
+    setResult(result);
+    setScore((prevScore) =>
+      result === "Win"
+        ? prevScore + 1
+        : result === "Lose"
+          ? Math.max(0, prevScore - 1)
+          : prevScore,
+    );
+  }, [houseChoice, userChoice, setScore]);
 
   return (
     <div className="grid h-full grid-rows-2">
       <div className="grid grid-cols-2 self-center">
-        <div className="relative grid h-28 w-full items-center justify-items-center">
-          <div className="absolute h-28 w-28 rounded-full bg-black/15"></div>
-          <ChoiceButton choice={userChoice} result={"user1"} />
-          <p className="text-md absolute -bottom-14 w-full text-center font-bold uppercase tracking-wider text-white">
-            You Picked
-          </p>
-        </div>
-        <div className="relative grid h-28 w-full items-center justify-items-center">
-          <div className="absolute h-28 w-28 rounded-full bg-black/15"></div>
-          <ChoiceButton
-            choice={houseChoice ? houseChoice : randomizedHouseCoice}
-            result={"user2"}
-          />
-          <p className="text-md absolute -bottom-14 w-full text-center font-bold uppercase tracking-wider text-white">
-            The House picked
-          </p>
-        </div>
+        <ChoiceDisplay
+          choice={userChoice}
+          label={"You Picked"}
+          player={"user1"}
+        />
+        <ChoiceDisplay
+          choice={houseChoice || randomizedHouseChoice}
+          label={"The House Picked"}
+          player={"user2"}
+        />
       </div>
       <div
         className={`grid place-items-center gap-10 self-center ${result ? "opacity-100 transition-opacity duration-300" : "opacity-0"}`}
@@ -130,6 +127,18 @@ function GameResult({ userChoice, setScore, setUserSelection }) {
           Play Again
         </button>
       </div>
+    </div>
+  );
+}
+
+function ChoiceDisplay({ choice, label, player }) {
+  return (
+    <div className="relative grid h-28 w-full items-center justify-items-center">
+      <div className="absolute h-28 w-28 rounded-full bg-black/15"></div>
+      <ChoiceButton choice={choice} player={player} />
+      <p className="text-md absolute -bottom-14 w-full text-center font-bold uppercase tracking-wider text-white">
+        {label}
+      </p>
     </div>
   );
 }
