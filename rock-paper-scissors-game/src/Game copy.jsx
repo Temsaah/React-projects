@@ -114,17 +114,23 @@ function GameResult({ userChoice, setScore, setUserSelection }) {
   }, [houseChoice, userChoice, setScore]);
 
   return (
-    <div className="grid h-full grid-cols-2 py-16 max-w-[1000px] mx-auto lg:grid-rows-1 lg:grid-cols-3">
-      <ChoiceDisplay
-        choice={userChoice}
-        label={"You Picked"}
-        player={"user1"}
-      />
+    <div className="grid h-full grid-rows-2 lg:grid-rows-1">
+        <ChoiceDisplay
+          choice={userChoice}
+          label={"You Picked"}
+          player={"user1"}
+        />
+        <ChoiceDisplay
+          choice={houseChoice || randomizedHouseChoice}
+          label={"The House Picked"}
+          player={"user2"}
+        />
+      <div className="grid grid-cols-2 self-center ">
+      </div>
       <div
-        className={`grid place-items-center gap-10 self-center ${result ? "opacity-100 transition-opacity duration-300" : "opacity-0"} col-span-2 row-start-2 mt-auto text-center lg:col-start-2 lg:row-start-1 lg:col-span-1 lg:row-span-1 lg:mt-0`}
+        className={`grid place-items-center gap-10 self-center ${result ? "opacity-100 transition-opacity duration-300" : "opacity-0"}`}
       >
-        <p className="text-6xl font-bold uppercase text-white">You {result}</p>
-
+        <p className="text-5xl font-bold uppercase text-white">You {result}</p>
         <button
           className="rounded-xl bg-white px-14 py-3 font-bold uppercase tracking-[3px] text-neutral-darkText"
           onClick={() => setUserSelection(null)}
@@ -132,22 +138,18 @@ function GameResult({ userChoice, setScore, setUserSelection }) {
           Play Again
         </button>
       </div>
-      <ChoiceDisplay
-        choice={houseChoice || randomizedHouseChoice}
-        label={"The House Picked"}
-        player={"user2"}
-      />
     </div>
   );
 }
 
 function ChoiceDisplay({ choice, label, player }) {
   return (
-    <div
-      className={`relative grid w-full h-full items-center ${player === "user1" ? "justify-self-start lg:col-start-1" : "justify-self-end lg:col-start-3"}`}
-    >
-      <ChoiceButton choice={choice} player={player} label={label} />
-
+    <div className="relative grid h-28 w-full items-center justify-items-center">
+      <div className="absolute h-28 w-28 rounded-full bg-black/15"></div>
+      <ChoiceButton choice={choice} player={player} />
+      <p className="text-md absolute -bottom-14 w-full text-center font-bold uppercase tracking-wider text-white">
+        {label}
+      </p>
     </div>
   );
 }

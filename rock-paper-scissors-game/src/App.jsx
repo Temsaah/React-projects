@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Game from "./Game";
@@ -7,16 +7,17 @@ import Rules from "./Rules";
 
 function App() {
   const [showRules, setShowRules] = useState(false);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(localStorage.getItem("score") || 0);
+
   return (
-    <>
+    <div className="grid place-items-center bg-radial-bg">
       {showRules && <Rules setShowRules={setShowRules} />}
-      <div className="grid min-h-screen grid-rows-[auto,1fr,auto] bg-radial-bg p-7">
+      <div className="grid min-h-screen w-full grid-rows-[auto,1fr,auto] p-7 ">
         <Header score={score} />
-        <Game setScore={setScore}/>
+        <Game setScore={setScore} />
         <Footer setShowRules={setShowRules} />
       </div>
-    </>
+    </div>
   );
 }
 
